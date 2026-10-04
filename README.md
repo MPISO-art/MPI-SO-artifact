@@ -1,7 +1,7 @@
 # MPI-SO Artifact
 
 This repository documents the experimental artifact for MPI-SO. The artifact
-is distributed as a prebuilt, source-free Docker image. This GitHub repository
+is distributed as a prebuilt Docker image. This GitHub repository
 contains only this guide and the result figures.
 
 ## Docker Image
@@ -152,6 +152,12 @@ Every dynamic run produces:
 - raw logs and normalized application output for auditing failures or output
   mismatches.
 
+The commands above reproduce the ordinary RQ2 executions. In the original
+evaluation workflow, the same transformed programs were subsequently compiled
+as profiling variants and run five times with one representative RQ2 runtime
+configuration per program. Those follow-on runs produced the dynamic window
+instruction counts and times reported for RQ1.
+
 ### Approximate Runtime Budget
 
 The analysis was performed once per program and its generated executables were
@@ -187,6 +193,9 @@ Speedup is the ratio of the Original mean time to the corresponding variant's
 mean time. RQ1 values are weighted by the number of executed request instances.
 
 ### RQ1: Overlapping Windows
+
+Each RQ1 row summarizes five profiling runs of one representative configuration
+drawn from the corresponding program's RQ2 runtime configurations.
 
 MPI-SO enlarges the effective computation window for all seven program and
 analysis configurations. The estimated Petal-to-MPI-SO window speedup ranges
@@ -235,7 +244,7 @@ docker rm "$container"
 ```
 
 The binary-only dynamic workflow reproduces RQ2 from prebuilt executables.
-Regenerating RQ1 profiles is intentionally outside this package because it
-requires large per-instance traces and rebuilding profiling variants; the
-complete call-level and program-level RQ1 evidence remains available through
-`reference-results`.
+Regenerating the follow-on RQ1 profiles is outside this package because it
+requires rebuilding profiling variants and retaining large per-instance traces;
+the complete call-level and program-level RQ1 evidence remains available
+through `reference-results`.
