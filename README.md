@@ -10,7 +10,7 @@ Docker Hub: [mpisoartifact/mpiso-artifact](https://hub.docker.com/r/mpisoartifac
 
 ```text
 Image:  mpisoartifact/mpiso-artifact:submission-v2
-Digest: sha256:11bc68a820ac49017fe645b6fe91a3dad5c72bb9f1f6d53c8da747595ea776f8
+Digest: sha256:852f81cfa60e6c93acfccc6fe442458c62a530ab6289ad37a55170f35f47b815
 ```
 
 The image contains prebuilt MPI-SO, SVF, and SimGrid executables, their runtime
@@ -21,7 +21,7 @@ benchmark source files.
 Pull the immutable image with:
 
 ```bash
-docker pull mpisoartifact/mpiso-artifact@sha256:11bc68a820ac49017fe645b6fe91a3dad5c72bb9f1f6d53c8da747595ea776f8
+docker pull mpisoartifact/mpiso-artifact@sha256:852f81cfa60e6c93acfccc6fe442458c62a530ab6289ad37a55170f35f47b815
 ```
 
 All commands below use the readable `submission-v2` tag. The digest form may
@@ -70,8 +70,8 @@ These commands do not rerun an experiment.
 
 ## Quick Run
 
-Run one small Adept Stencil configuration (`size=64`, `reps=2`, `NP=4`) once
-for Original, Petal, MPI-SO, and Manual:
+Run the Poisson `n=1024`, `NP=32` configuration once for Original, Petal,
+MPI-SO, and Manual:
 
 ```bash
 docker run --rm \
@@ -80,9 +80,11 @@ docker run --rm \
   mpisoartifact/mpiso-artifact:submission-v2 quick
 ```
 
-This is a functional smoke test, not a paper result. Its simulated times are
-very short and therefore particularly sensitive to measurement noise. Results
-are written under `results/quick-<timestamp>/`.
+This formal configuration provides a short end-to-end demonstration with a
+clear MPI-SO improvement. It normally takes about four to eight minutes on a
+workstation. Because `quick` performs only one repetition, its measurements are
+illustrative rather than paper results. Results are written under
+`results/quick-<timestamp>/`.
 
 ## Selective Runs
 
