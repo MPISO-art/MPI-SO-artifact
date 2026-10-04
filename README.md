@@ -86,6 +86,14 @@ workstation. Because `quick` performs only one repetition, its measurements are
 illustrative rather than paper results. Results are written under
 `results/quick-<timestamp>/`.
 
+View the summary and individual samples in aligned columns:
+
+```bash
+latest=$(ls -dt results/quick-*/ | head -n 1)
+column -t -s $'\t' "$latest/summary-rq2.tsv"
+column -t -s $'\t' "$latest/runs.tsv"
+```
+
 ## Selective Runs
 
 List all packaged paper configurations and their variants:
@@ -113,6 +121,14 @@ docker run --rm \
   -v "$PWD/results:/results" \
   mpisoartifact/mpiso-artifact:submission-v2 \
   run poisson n1024-np16 5
+```
+
+After either selective command, inspect its newest result directory with:
+
+```bash
+latest=$(ls -dt results/program-*/ results/run-*/ 2>/dev/null | head -n 1)
+column -t -s $'\t' "$latest/summary-rq2.tsv"
+column -t -s $'\t' "$latest/runs.tsv"
 ```
 
 Valid program names are `congrad`, `dt-s`, `dt-w`, `poisson`, `adept`,
@@ -145,6 +161,14 @@ accounted for about 21 hours before Manual runs and the timed-out Congrad case;
 the latter can add up to 18 hours because its three variants are attempted
 separately. Full results are written under `results/full-<timestamp>/`.
 
+When the run finishes, view its aggregate and per-sample results with:
+
+```bash
+latest=$(ls -dt results/full-*/ | head -n 1)
+column -t -s $'\t' "$latest/summary-rq2.tsv"
+column -t -s $'\t' "$latest/runs.tsv"
+```
+
 Every dynamic run produces:
 
 - `runs.tsv`: status, simulated time, host wall time, output-equivalence result,
@@ -153,6 +177,10 @@ Every dynamic run produces:
   output validity, and speedup over Original;
 - raw logs and normalized application output for auditing failures or output
   mismatches.
+
+The `column` command is part of `util-linux` on common Linux distributions. If
+it is unavailable, use `less -S "$latest/summary-rq2.tsv"` to inspect the TSV
+without wrapping long rows.
 
 The commands above reproduce the ordinary RQ2 executions. In the original
 evaluation workflow, the same transformed programs were subsequently compiled
